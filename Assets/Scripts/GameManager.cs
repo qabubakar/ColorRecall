@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     //public Button nextLevelButton; // Button to proceed to the next level
     //public Button tryAgainButton; // Button to retry the current level
 
-  
+
 
     public static Material selectedMaterial; // Currently selected material
 

@@ -2,29 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PaintableObject : MonoBehaviour
+public class BrushPainter : MonoBehaviour
 {
-    private Renderer objectRenderer;
-    private GameManager gameManager;
-
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        objectRenderer = GetComponent<Renderer>();
-        gameManager = FindObjectOfType<GameManager>();
-    }
-
-    void OnMouseDown()
-    {
-        if (GameManager.selectedMaterial != null)
+        // Check if the interacting object has the tag "paintable"
+        
+        if (other.CompareTag("brush"))
         {
-            // Apply the selected material color to this object
-            objectRenderer.material.color = GameManager.selectedMaterial.color;
+            Debug.Log("Interaction with paintable object detected.");
 
-            // Register the user's guess
-            gameManager.SetUserGuess(gameObject, GameManager.selectedMaterial.color);
+            // Paint the object with the brush's material
+            Renderer brushRenderer = other.GetComponent<Renderer>();
+            Renderer paintableRenderer = GetComponent<Renderer>();
+            
+
+            if (paintableRenderer != null && brushRenderer != null)
+            {
+                paintableRenderer.material = brushRenderer.material;
+                Debug.Log("Paintable object painted with brush material: " + brushRenderer.material.name);
+            }
+        }
+        else
+        {
+            Debug.Log("Collision with non-paintable object.");
         }
     }
 }
-
-
-
